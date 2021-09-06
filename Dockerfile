@@ -33,4 +33,5 @@ RUN rm -rf /var/lib/apt/lists/* && apt-get purge --auto-remove && apt-get clean
 
 # run
 ENV LD_LIBRARY_PATH="/opt/rocm-4.3.0/hip/lib/:${LD_LIBRARY_PATH}"
+ENV HOME="/var/lib/hqplayer/home"
 ENTRYPOINT /usr/bin/hqplayerd
