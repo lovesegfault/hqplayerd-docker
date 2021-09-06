@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+version="$1"
+
+sed -i Makefile -e "s/RELEASE ?=.*/RELEASE ?= 1/"
+sed -i Makefile -e "s/VERSION ?=.*/VERSION ?= ${version}/"
+sed -i Dockerfile -e "s/HQPLAYERD_VERSION=.*/HQPLAYERD_VERSION=\"${version}\"/"

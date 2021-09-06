@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+deb_list="$(curl -s https://www.signalyst.eu/bins/hqplayerd/focal/ |
+    grep -oP "hqplayerd.*\.deb" |
+    cut -f 1 -d '"' |
+    grep "\.deb$" |
+    grep "amd_")"
+
+version_list="$(cut -f 2 -d "_" <<< $deb_list | sort -V)"
+
+latest="$(tail -n1 <<< $version_list)"
+
+echo "$latest"
+

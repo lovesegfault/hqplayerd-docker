@@ -1,0 +1,52 @@
+name: update-hqplayerd
+on:
+  schedule:
+    - cron:  '* */6 * * *'
+  workflow_dispatch:
+
+jobs:
+  get-latest:
+    runs-on: ubuntu-latest
+    outputs:
+      latest: ${{ steps.get-latest.outputs.latest }}
+    steps:
+      - uses: actions/checkout@v2.3.4
+      - id: get-latest
+        run: |
+          echo "::set-output name=latest::$(./get_latest)"
+
+  get-current:
+    runs-on: ubuntu-latest
+    outputs:
+      current: ${{ steps.get-current.outputs.current }}
+    steps:
+      - uses: actions/checkout@v2.3.4
+      - id: get-current
+        run: |
+          echo "::set-output name=current::$(./get_current)"
+
+  update-version:
+    runs-on: ubuntu-latest
+    needs:
+      - get-latest
+      - get-current
+    if: needs.get-latest.outputs.latest != needs.get-current.outputs.current
+    steps:
+      - uses: actions/checkout@v2.3.4
+      - run: git config --global user.email "hatesegfault@protonmail.ch"
+      - run: git config --global user.name "hatesegfault"
+      - run: ./update "${{ needs.get-latest.outputs.latest }}"
+      - run: make build
+      - uses: peter-evans/create-pull-request@v3
+        id: cpr
+        with:
+          branch: hqplayerd-update
+          commit-message: "chore(hqplayerd): ${{ needs.get-current.outputs.current }} -> ${{ needs.get-latest.outputs.latest }}"
+          delete-branch: true
+          token: ${{ secrets.PAT }}
+      - uses: peter-evans/enable-pull-request-automerge@v1
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        with:
+          token: ${{ secrets.PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: rebase

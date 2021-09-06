@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+current="$(grep "HQPLAYERD_VERSION=" Dockerfile | cut -f 2 -d "=" | tr -d '"')"
+echo "$current"
+
