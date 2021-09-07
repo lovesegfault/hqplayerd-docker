@@ -20,6 +20,12 @@ RUN wget -q -O - https://repo.radeon.com/rocm/rocm.gpg.key | apt-key add -
 RUN echo 'deb [arch=amd64] https://repo.radeon.com/rocm/apt/debian/ ubuntu main'| tee /etc/apt/sources.list.d/rocm.list
 RUN apt-get update -y && apt-get upgrade -y
 
+RUN wget -q -O /tmp/libnvidia-compute.deb "https://launchpadlibrarian.net/556517312/libnvidia-compute-470_470.63.01-0ubuntu0.20.04.2_amd64.deb"
+RUN wget -q -O /tmp/nvidia-utils.deb "https://launchpadlibrarian.net/556517343/nvidia-utils-470_470.63.01-0ubuntu0.20.04.2_amd64.deb"
+RUN apt-get install -y /tmp/libnvidia-compute.deb
+RUN apt-get install -y /tmp/nvidia-utils.deb
+RUN rm /tmp/*.deb
+
 COPY --from=libgmpris-fetcher /tmp/libgmpris.deb /tmp/libgmpris.deb
 RUN apt-get install --no-install-recommends -y /tmp/libgmpris.deb
 RUN rm /tmp/libgmpris.deb
