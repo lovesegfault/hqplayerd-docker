@@ -20,5 +20,6 @@ jobs:
           echo "::set-output name=current::$(./get_current)"
       - uses: docker/build-push-action@v2
         with:
+          no-cache: true
           push: true
           tags: lovesegfault/hqplayerd:latest,lovesegfault/hqplayerd:${{ steps.get-current.outputs.current }}
