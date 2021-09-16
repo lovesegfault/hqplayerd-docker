@@ -30,7 +30,7 @@ jobs:
     needs:
       - get-latest
       - get-current
-    if: needs.get-latest.outputs.latest != needs.get-current.outputs.current
+    if: needs.get-latest.outputs.latest != needs.get-current.outputs.current && needs.get-latest.outputs.latest != ""
     steps:
       - uses: actions/checkout@v2.3.4
       - run: git config --global user.email "hatesegfault@protonmail.ch"
