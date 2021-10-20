@@ -40,8 +40,9 @@ jobs:
       - uses: peter-evans/create-pull-request@v3
         id: cpr
         with:
-          branch: hqplayerd-update
-          commit-message: "chore(hqplayerd): ${{ needs.get-current.outputs.current }} -> ${{ needs.get-latest.outputs.latest }}"
+          branch: update
+          commit-message: "feat: ${{ needs.get-current.outputs.current }} -> ${{ needs.get-latest.outputs.latest }}"
+          title: "feat: ${{ needs.get-current.outputs.current }} -> ${{ needs.get-latest.outputs.latest }}"
           delete-branch: true
           token: ${{ secrets.PAT }}
       - uses: peter-evans/enable-pull-request-automerge@v1
