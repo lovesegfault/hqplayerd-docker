@@ -6,7 +6,7 @@ RUN wget -O /tmp/libgmpris.deb "https://www.sonarnerd.net/src/focal/${LIBGMPRIS}
 ################################################################################
 FROM alpine:latest as hqplayerd-fetcher
 RUN apk add --no-cache wget
-ENV HQPLAYERD_VERSION="4.28.3-107amd"
+ENV HQPLAYERD_VERSION="4.29.0-110amd"
 ENV HQPLAYERD="hqplayerd_${HQPLAYERD_VERSION}_amd64.deb"
 RUN wget -O /tmp/hqplayerd.deb "https://www.signalyst.eu/bins/hqplayerd/focal/${HQPLAYERD}"
 ################################################################################
