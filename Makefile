@@ -1,7 +1,7 @@
 USERNAME ?= lovesegfault
 IMAGE ?= hqplayerd
 
-VERSION ?= 4.30.3-127amd
+VERSION ?= 4.32.0-134amd
 
 .PHONY: build push
 
